@@ -1,13 +1,22 @@
 
 
-  :root{
+ :root {
+    --navy: #0A0F1E;
+    --navy-mid: #111B33;
+    --blue: #2BA8E0;
+    --blue-deep: #175586;
+    --whatsapp: #25D366;
 
- :root{
+    --paper: #F5F7FA;
+    --ink: #0F1522;
+    --ink-soft: #55607A;
+    --line: #E1E5EC;
+    --card: #FFFFFF;
 
-    --navy:#0A0F1E; --navy-mid:#111B33; --blue:#2BA8E0; --blue-deep:#175586; --whatsapp:#25D366;
-    --paper:#F5F7FA; --ink:#0F1522; --ink-soft:#55607A; --line:#E1E5EC; --card:#FFFFFF;
-    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-  }
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
   @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --paper:#0C1120; --ink:#EDEFF4; --ink-soft:#A8B0C4; --card:#141C30; --line:#26314C; } }
   :root[data-theme="dark"]{ --paper:#0C1120; --ink:#EDEFF4; --ink-soft:#A8B0C4; --card:#141C30; --line:#26314C; }
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -162,4 +171,3 @@
   .foot-bottom{border-top:1px solid rgba(255,255,255,.1); padding:18px 0; padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));
       display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; font-size:.78rem; color:#7C87A3;}
 
-}
