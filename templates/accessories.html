@@ -19,7 +19,11 @@
     </a>
     <div class="navlinks">
       
+
       <a href="index.html#services">Services</a>
+
+      <a href="work.html">Services</a>
+
       <a href="work.html">Our Work</a>
       <a href="accessories.html" class="active">Tech Accessories</a>
       <a href="about.html">About</a>
@@ -50,7 +54,11 @@
     <p>Browse our available accessories, choose your preferred options, and send your order inquiry directly to us on WhatsApp — no prices, just the products you need.</p>
     <div class="cta-row">
       <button class="btn btn-wa" onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">Browse Accessories</button>
-      <a class="btn btn-ghost" href="https://wa.me/260952290083" target="_blank" rel="noopener">Order via WhatsApp</a>
+
+      
+
+      <a class="btn btn-ghost" href="https://wa.me/260769160233" target="_blank" rel="noopener">Order via WhatsApp</a>
+
     </div>
     <p class="note">Only the colours and models shown are currently available — ask us if you don't see what you need.</p>
   </div>
@@ -304,7 +312,11 @@ function sendOrder(){
     msg += '\n';
   });
   msg += "Please confirm availability and provide the relevant details.\n\nThank you!";
-  const url = 'https://wa.me/260952290083?text=' + encodeURIComponent(msg);
+
+  const url = 'https://wa.me/260769160233?text=' + encodeURIComponent(msg);
+
+  
+
   const a = document.createElement('a');
   a.href = url;
   a.target = '_blank';
