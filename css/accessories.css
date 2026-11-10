@@ -108,3 +108,16 @@
   .contact-modal strong,.contact-modal small{display:block;}
   .contact-modal small{color:var(--ink-soft);font-size:.78rem;margin-top:2px;}
   footer{border-top:1px solid var(--line); padding:26px 0; padding-bottom:calc(26px + env(safe-area-inset-bottom,0px)); text-align:center; color:var(--ink-soft); font-size:.85rem;}
+
+
+/* Mobile navigation visibility and touch target fix */
+@media (max-width: 859px) {
+  nav > .wrap { width:100%; min-width:0; gap:8px; padding-left:16px; padding-right:16px; }
+  .brand { min-width:0; flex-shrink:1; gap:7px; font-size:.96rem; }
+  .brand img, .brand svg { width:28px; height:28px; flex:0 0 28px; object-fit:contain; }
+  .nav-right { display:flex; align-items:center; gap:8px; flex:0 0 auto; }
+  .navlinks { display:none !important; }
+  button.hamburger { display:flex !important; flex:0 0 42px; width:42px; height:42px; align-items:center; justify-content:center; position:relative; z-index:60; padding:8px; border:1px solid rgba(255,255,255,.35); border-radius:8px; background:transparent; }
+  button.hamburger span { display:block; width:22px; height:2px; flex:0 0 2px; background:#fff; border-radius:2px; }
+  .mobile-menu { position:relative; z-index:55; width:100%; }
+}
