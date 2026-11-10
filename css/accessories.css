@@ -97,21 +97,6 @@
   .qty span{min-width:20px; text-align:center; font-weight:600;}
    .modal .add{width:100%;margin-top:20px;background:var(--blue);color:#fff;border:none;border-radius:8px;padding:13px;font-weight:600;font-size:.96rem;}
 
-  /* Cart drawer */
-  .cart-overlay{position:fixed; inset:0; background:rgba(6,9,18,.55); display:none; z-index:110;}
-  .cart-overlay.open{display:block;}
-  .cart-panel{position:fixed; top:0; right:0; bottom:0; width:100%; max-width:400px; background:var(--card); z-index:111; transform:translateX(100%); transition:transform .2s; display:flex; flex-direction:column; padding:20px; padding-top:calc(20px + env(safe-area-inset-top,0px));}
-  .cart-panel.open{transform:translateX(0);}
-  .cart-panel h3{font-size:1.15rem; margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;}
-  .cart-items{flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:12px;}
-  .citem{border:1px solid var(--line); border-radius:10px; padding:12px; font-size:.84rem;}
-  .citem .top{display:flex; justify-content:space-between; font-weight:600;}
-  .citem .meta{color:var(--ink-soft); margin-top:4px; font-size:.8rem;}
-  .citem .rm{color:#c0392b; font-size:.78rem; margin-top:6px; background:none; border:none;}
-  .cart-empty{color:var(--ink-soft); font-size:.9rem; text-align:center; margin-top:30px;}
-  
-  .cart-panel .send:disabled{opacity:.4;}
-
   .contact-overlay{position:fixed;inset:0;background:rgba(6,9,18,.65);display:none;align-items:center;justify-content:center;padding:18px;z-index:130;}
   .contact-overlay.open{display:flex;}
   .contact-modal{position:relative;width:100%;max-width:420px;background:var(--card);color:var(--ink);border-radius:16px;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.25);}
