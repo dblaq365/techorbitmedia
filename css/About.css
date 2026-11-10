@@ -171,3 +171,17 @@
   .foot-bottom{border-top:1px solid rgba(255,255,255,.1); padding:18px 0; padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));
       display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px; font-size:.78rem; color:#7C87A3;}
 
+
+
+/* Mobile navigation visibility and touch target fix */
+@media (max-width: 779px) {
+  nav > .wrap { width:100%; min-width:0; gap:8px; padding-left:16px; padding-right:16px; }
+  .brand { min-width:0; flex-shrink:1; gap:7px; font-size:.96rem; }
+  .brand svg, .brand img { width:28px; height:28px; flex:0 0 28px; object-fit:contain; }
+  nav .wrap > div:last-child { display:flex; align-items:center; gap:8px; flex:0 0 auto; }
+  .nav-cta { display:none !important; }
+  .navlinks { display:none !important; }
+  button.hamburger { display:flex !important; flex:0 0 42px; width:42px; height:42px; align-items:center; justify-content:center; position:relative; z-index:60; padding:8px; border:1px solid rgba(255,255,255,.35); border-radius:8px; background:transparent; }
+  button.hamburger span { display:block; width:22px; height:2px; flex:0 0 2px; background:#fff; border-radius:2px; }
+  .mobile-menu { position:relative; z-index:55; width:100%; }
+}
