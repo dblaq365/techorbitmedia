@@ -30,10 +30,7 @@
       <a href="index.html#contact">Contact</a>
     </div>
     <div class="nav-right">
-      <button class="icon-btn" onclick="openCart()" aria-label="Inquiry list">
-        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
-        <span class="badge" id="cartBadge" style="display:none">0</span>
-      </button>
+      
       <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -51,13 +48,13 @@
   <div class="wrap">
     <div class="eyebrow">Tech Orbit Media</div>
     <h1>Tech Accessories Catalogue</h1>
-    <p>Browse our available accessories, choose your preferred options, and send your order inquiry directly to us on WhatsApp — no prices, just the products you need.</p>
+    <p>Explore our available accessories and view product details. For availability and enquiries, contact Tech Orbit Media.</p>
     <div class="cta-row">
-      <button class="btn btn-wa" onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">Browse Accessories</button>
+      <button class="btn btn-primary" onclick="document.getElementById('catalogue').scrollIntoView({behavior:'smooth'})">Browse Accessories</button>
 
       
 
-      <a class="btn btn-ghost" href="https://wa.me/260769160233" target="_blank" rel="noopener">Order via WhatsApp</a>
+      <button class="btn btn-ghost" onclick="openContact()">Contact Tech Orbit Media</button>
 
     </div>
     <p class="note">Only the colours and models shown are currently available — ask us if you don't see what you need.</p>
@@ -90,13 +87,17 @@
 <div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal" id="modal"></div>
 </div>
-
-<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-panel" id="cartPanel">
-  <h3>My Inquiry <button onclick="closeCart()" style="background:none;border:none;font-size:1.3rem;color:var(--ink-soft)">&times;</button></h3>
-  <div class="cart-items" id="cartItems"></div>
-  <button class="send" id="sendBtn" onclick="sendOrder()" disabled>Send Inquiry on WhatsApp</button>
+<div class="contact-overlay" id="contactOverlay" onclick="if(event.target===this)closeContact()">
+  <div class="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
+    <button class="contact-close" onclick="closeContact()" aria-label="Close">&times;</button>
+    <h3 id="contactTitle">Contact Tech Orbit Media</h3><p>Choose how you would like to get in touch.</p>
+    <a href="tel:+260769160233"><span>☎</span><span><strong>Call</strong><small>Speak to us directly</small></span></a>
+    <a href="mailto:techorbitmedia365@gmail.com"><span>✉</span><span><strong>Email</strong><small>Send us an email</small></span></a>
+    <a href="https://www.facebook.com/profile.php?id=61575142301447" target="_blank" rel="noopener"><span>f</span><span><strong>Facebook</strong><small>Visit our Facebook page</small></span></a>
+  </div>
 </div>
+
+
 
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -174,8 +175,7 @@ const PRODUCTS = [
 ];
 
 let activeCat = 'all';
-let cart = [];
-let currentProduct = null, currentSelections = {}, currentQty = 1;
+let currentProduct = null;
 
 function renderCats(){
   const el = document.getElementById('catgrid');
@@ -204,128 +204,20 @@ function renderProducts(){
       <div class="pbody">
         <h3>${p.name}</h3>
         <p>${p.desc}</p>
-        <button onclick="openModal(${p.id})">View Options</button>
+        <button onclick="openModal(${p.id})">View Product</button>
       </div>
     </div>`).join('') || `<p style="color:var(--ink-soft)">No products match that search.</p>`;
 }
 
-function openModal(id){
-  currentProduct = PRODUCTS.find(p=>p.id===id);
-  currentSelections = {}; currentQty = 1;
-  currentProduct.fields.forEach(f => { if(f.type==='swatch') currentSelections[f.key]=f.options[0].n; });
-  renderModal();
-  document.getElementById('overlay').classList.add('open');
-}
+function openModal(id){ currentProduct = PRODUCTS.find(p => p.id === id); renderModal(); document.getElementById('overlay').classList.add('open'); }
 function closeModal(){ document.getElementById('overlay').classList.remove('open'); }
-
-function setField(key, value){ currentSelections[key] = value; renderModal(); }
-
 function renderModal(){
   const p = currentProduct;
-  const fieldsHtml = p.fields.map(f => {
-    if(f.type==='select'){
-      return `<div class="field"><label>${f.label}</label><select onchange="setField('${f.key}', this.value)">
-        <option value="">Select ${f.label.toLowerCase()}</option>
-        ${f.options.map(o=>`<option ${currentSelections[f.key]===o?'selected':''}>${o}</option>`).join('')}
-      </select></div>`;
-    }
-    if(f.type==='model'){
-      if(currentSelections.brand === 'Apple (iPhone)'){
-        return `<div class="field"><label>${f.label}</label><select onchange="setField('${f.key}', this.value)">
-          <option value="">Select model</option>
-          ${IPHONE_MODELS.map(o=>`<option ${currentSelections[f.key]===o?'selected':''}>${o}</option>`).join('')}
-        </select></div>`;
-      }
-      return `<div class="field"><label>${f.label}</label><input type="text" value="${currentSelections[f.key]||''}" placeholder="Enter your exact device model" oninput="currentSelections['${f.key}']=this.value"></div>`;
-    }
-    if(f.type==='text'){
-      return `<div class="field"><label>${f.label}</label><input type="text" value="${currentSelections[f.key]||''}" placeholder="Enter ${f.label.toLowerCase()}" oninput="currentSelections['${f.key}']=this.value"></div>`;
-    }
-    if(f.type==='swatch'){
-      return `<div class="field"><label>${f.label}</label><div class="swatches">
-        ${f.options.map(c=>`<div class="sw ${currentSelections[f.key]===c.n?'sel':''}" style="background:${c.h}" title="${c.n}" onclick="setField('${f.key}','${c.n}')"></div>`).join('')}
-      </div></div>`;
-    }
-  }).join('');
-
-  document.getElementById('modal').innerHTML = `
-    <button class="x" onclick="closeModal()">&times;</button>
-    <h3>${p.name}</h3>
-    <p style="color:var(--ink-soft); font-size:.88rem;">${p.desc}</p>
-    <div class="pimg2">${p.img?`<img src="${p.img}" alt="${p.name}">`:`<div class="ci"><svg viewBox="0 0 24 24" stroke="#fff" fill="none" stroke-width="2">${ICONS[p.icon]}</svg></div>`}</div>
-    ${fieldsHtml}
-    <div class="field"><label>Quantity</label>
-      <div class="qty">
-        <button onclick="currentQty=Math.max(1,currentQty-1); renderModal()">−</button>
-        <span>${currentQty}</span>
-        <button onclick="currentQty++; renderModal()">+</button>
-      </div>
-    </div>
-    <div class="field"><label>Additional Notes (optional)</label><textarea rows="2" placeholder="e.g. specific request, other details…" oninput="currentSelections['notes']=this.value">${currentSelections.notes||''}</textarea></div>
-    <button class="add" onclick="addToCart()">Add to Inquiry</button>
-  `;
+  const image = p.img ? '<img src="' + p.img + '" alt="' + p.name + '">' : '<div class="ci"><svg viewBox="0 0 24 24" stroke="#fff" fill="none" stroke-width="2">' + ICONS[p.icon] + '</svg></div>';
+  document.getElementById('modal').innerHTML = '<button class="x" onclick="closeModal()" aria-label="Close">&times;</button><h3>' + p.name + '</h3><p style="color:var(--ink-soft);font-size:.88rem;">' + p.desc + '</p><div class="pimg2">' + image + '</div><button class="add" onclick="closeModal();openContact()">Contact Tech Orbit Media</button>';
 }
-
-function addToCart(){
-  cart.push({
-    name: currentProduct.name,
-    selections: {...currentSelections},
-    qty: currentQty,
-    fieldsMeta: currentProduct.fields.map(f=>({key:f.key, label:f.label}))
-  });
-  updateBadge();
-  closeModal();
-  openCart();
-}
-
-function updateBadge(){
-  const b = document.getElementById('cartBadge');
-  if(cart.length){ b.style.display='flex'; b.textContent = cart.length; } else { b.style.display='none'; }
-}
-
-function openCart(){ renderCart(); document.getElementById('cartOverlay').classList.add('open'); document.getElementById('cartPanel').classList.add('open'); }
-function closeCart(){ document.getElementById('cartOverlay').classList.remove('open'); document.getElementById('cartPanel').classList.remove('open'); }
-
-function renderCart(){
-  const el = document.getElementById('cartItems');
-  if(!cart.length){ el.innerHTML = '<div class="cart-empty">Your inquiry list is empty.<br>Add a product to get started.</div>'; document.getElementById('sendBtn').disabled = true; return; }
-  el.innerHTML = cart.map((item,i) => {
-    const meta = (item.fieldsMeta||[]).map(f=>item.selections[f.key]).filter(Boolean).join(' · ');
-    return `<div class="citem">
-      <div class="top"><span>${item.name}</span><span>×${item.qty}</span></div>
-      ${meta?`<div class="meta">${meta}</div>`:''}
-      ${item.selections.notes?`<div class="meta">Note: ${item.selections.notes}</div>`:''}
-      <button class="rm" onclick="removeItem(${i})">Remove</button>
-    </div>`;
-  }).join('');
-  document.getElementById('sendBtn').disabled = false;
-}
-function removeItem(i){ cart.splice(i,1); updateBadge(); renderCart(); }
-
-function sendOrder(){
-  let msg = "Hello Tech Orbit Media! \nI'd like to enquire about the following accessories:\n\n";
-  cart.forEach((item,i) => {
-    msg += `${i+1}. ${item.name}\n`;
-    (item.fieldsMeta||[]).forEach(f => { const v = item.selections[f.key]; if(v) msg += `   • ${f.label}: ${v}\n`; });
-    msg += `   • Quantity: ${item.qty}\n`;
-    if(item.selections.notes) msg += `   • Note: ${item.selections.notes}\n`;
-    msg += '\n';
-  });
-  msg += "Please confirm availability and provide the relevant details.\n\nThank you!";
-
-  const url = 'https://wa.me/260769160233?text=' + encodeURIComponent(msg);
-
-  
-
-  const a = document.createElement('a');
-  a.href = url;
-  a.target = '_blank';
-  a.rel = 'noopener';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-}
-
+function openContact(){ document.getElementById('contactOverlay').classList.add('open'); }
+function closeContact(){ document.getElementById('contactOverlay').classList.remove('open'); }
 renderCats(); renderFilters(); renderProducts();
 </script>
 

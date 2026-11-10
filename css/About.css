@@ -5,7 +5,7 @@
     --navy-mid: #111B33;
     --blue: #2BA8E0;
     --blue-deep: #175586;
-    --whatsapp: #25D366;
+    
 
     --paper: #F5F7FA;
     --ink: #0F1522;
@@ -34,7 +34,7 @@
   .brand .tech{color:var(--blue);} .brand .media{color:#8B96B3; font-weight:500;}
   .navlinks{display:none; gap:24px; font-size:.92rem; color:#AEB8D1;}
   .navlinks a:hover{color:#fff;} .navlinks a.active{color:#fff; border-bottom:2px solid var(--blue); padding-bottom:4px;}
-  .nav-cta{background:var(--whatsapp); color:#fff; font-weight:600; padding:9px 16px; border-radius:6px; font-size:.86rem; white-space:nowrap;}
+  .nav-cta{background:var(--blue); color:#fff; font-weight:600; padding:9px 16px; border-radius:6px; font-size:.86rem; white-space:nowrap;}
   @media(min-width:780px){ .navlinks{display:flex;} }
 
   .hero{position:relative; padding:78px 0 64px; overflow:hidden; background-size:cover; background-position:center;}
@@ -46,7 +46,7 @@
   .hero p{margin-top:16px; max-width:46ch; color:#C9D2E3; font-size:1.05rem;}
   .cta-row{display:flex; flex-wrap:wrap; gap:14px; margin-top:26px;}
   .btn{display:inline-flex; align-items:center; gap:8px; padding:13px 22px; border-radius:7px; font-weight:600; font-size:.95rem;}
-  .btn-wa{background:var(--whatsapp); color:#fff;}
+  .btn-primary{background:var(--blue); color:#fff;}
   .btn-ghost{border:1px solid rgba(255,255,255,.5); color:#fff;}
   .btn:hover{filter:brightness(1.06);}
 
